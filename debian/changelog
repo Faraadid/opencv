@@ -1,4 +1,4 @@
-opencv3 (3.2.0+dfsg1-1~exp0ubuntu1) xenial; urgency=medium
+fd-opencv3 (3.2.0+dfsg1-1~exp0ubuntu1) xenial; urgency=medium
 
   * Made Ubuntu package from tag 3.2.0 in original opencv github, not tested
 
