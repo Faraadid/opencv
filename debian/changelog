@@ -2,5 +2,5 @@ fd-opencv3 (3.2.0+dfsg1-1~exp0ubuntu1) xenial; urgency=medium
 
   * Made Ubuntu package from tag 3.2.0 in original opencv github, not tested
 
- -- Navid Khazaee (nkhdiscovery) <navid.khazaee@gmail.com>  Wed, 01 Mar 2017 12:11:07 +0330
+ -- Navid Khazaee (nkhdiscovery) <navid.khazaee@gmail.com>  Wed, 01 Mar 2017 18:08:39 +0330
 
