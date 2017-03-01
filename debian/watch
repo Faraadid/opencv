@@ -1,0 +1,3 @@
+version=3
+opts=filenamemangle=s/.+\/v?(\d\S+)\.tar\.gz/opencv-$1\.tar\.gz/ \
+  https://github.com/Faraadid/opencv/tags .*/v?(\d\S+)\.tar\.gz
