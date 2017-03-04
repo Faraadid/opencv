@@ -23,4 +23,7 @@ CMakeCache.txt
 *.log
 *.tlog
 build
+.pc/
+debian/debhelper-build-stamp
 obj-x86_64-linux-gnu/
+obj-x86_64-linux-gnu-static/
