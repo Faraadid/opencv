@@ -126,7 +126,8 @@ override_dh_install:
 	# change install path of java library
 	#sed -i -e "s@share\/OpenCV\/java\/@lib\/jni\/@g" \
 	#	debian/tmp/usr/share/OpenCV/OpenCVModules-release.cmake
-
+	
+	mkdir -p debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/
 	for f in $$(ls obj-*/lib/libopencv_*.a); do \
 		cp --verbose --preserve=mode $$f debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/; done
 
