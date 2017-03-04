@@ -203,3 +203,4 @@ opencv_contrib/modules/ximgproc/tutorials/images/ambush_5_bm.png
 opencv_contrib/modules/ximgproc/tutorials/images/ambush_5_bm_with_filter.png
 opencv_contrib/modules/ximgproc/tutorials/images/ambush_5_left.jpg
 opencv_contrib/modules/ximgproc/tutorials/images/ambush_5_right.jpg
+opencv_contrib/modules/dnn/.download/bd5e3eed635a8d32e2b99658633815ef/v3.1.0/protobuf-cpp-3.1.0.tar.gz
