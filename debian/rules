@@ -79,7 +79,7 @@ CMAKE_FLAGS = \
 	-DWITH_CUDA=OFF \
 	-DENABLE_PRECOMPILED_HEADERS=OFF \
 	-DOPENCL_INCLUDE_DIR:PATH="/usr/include/CL/" \
-	-DOPENCV_EXTRA_MODULES_PATH=$(CURDIR)/contrib/modules \
+	-DOPENCV_EXTRA_MODULES_PATH=$(CURDIR)/opencv_contrib/modules \
 	$(CMAKE_ARCH_FLAGS) 
 
 %:
@@ -145,63 +145,3 @@ PKG = opencv
 UVER = $(shell dpkg-parsechangelog -S Version | sed 's,-.*,,')
 DTYPE = +dfsg1
 VER  ?= $(subst $(DTYPE),,$(UVER))
-get-orig-source:
-	$(eval GOS_TMP_DIR := $(shell mktemp -d $(PKG)-XXXXXXXXX))
-
-	@echo "# OpenCV Downloading..."
-	uscan --no-conf --verbose --force-download --destdir $(GOS_TMP_DIR) --no-symlink
-	$(if $(wildcard $(GOS_TMP_DIR)/$(PKG)-$(VER)),$(error $(PKG)-$(VER) exist, aborting..))
-	
-	@echo "# Extracting..."
-	cd $(GOS_TMP_DIR) \
-		&& mkdir $(PKG)-$(VER)$(DTYPE) \
-		&& tar -xf $(PKG)-$(VER).tar.* \
-			--directory $(PKG)-$(VER)$(DTYPE) \
-			--strip-components 1 \
-		|| $(RM) -r $(PKG)-$(VER)$(DTYPE)
-	
-	@echo "# Cleaning-up..."
-	cd $(GOS_TMP_DIR)/ \
-		&& $(RM) -r -v $(PKG)-$(VER)$(DTYPE)/3rdparty \
-		&& $(RM) -r -v $(PKG)-$(VER)$(DTYPE)/modules/highgui/src/files_Qt/Milky \
-		&& find $(PKG)-$(VER)$(DTYPE)/ -type f -name '[L|l]ena.png' -delete \
-		&& find $(PKG)-$(VER)$(DTYPE)/ -type f -name '[L|l]ena.jpg' -delete
-
-	@echo "# Packing..."
-	cd $(GOS_TMP_DIR) \
-		&& find -L "$(PKG)-$(VER)$(DTYPE)" -xdev -type f -print \
-		| LC_ALL=C sort \
-		| XZ_OPT="-6v" tar -caf "$(PKG)_$(VER)$(DTYPE).orig.tar.xz" \
-			-T- --owner=root --group=root --mode=a+rX \
-		&& $(RM) -r "$(PKG)-$(VER)$(DTYPE)"
-
-	@echo "# OpenCV contrib Downloading..."
-	uscan --no-conf --verbose --force-download \
-		--watchfile debian/`echo $(OCV_CONTRIB) | cut -d- -f1`.watch \
-		--upstream-version 0 --download-version `echo $(OCV_CONTRIB) | cut -d- -f2,3` \
-		--download --destdir $(GOS_TMP_DIR) --no-symlink
-	$(if $(wildcard $(GOS_TMP_DIR)/contrib_$(VER)),$(error contrib_$(VER) exist, aborting..))
-
-	@echo "# OpenCV contrib Extracting..."
-	cd $(GOS_TMP_DIR) \
-		&& mkdir -p contrib \
-		&& tar -xf contrib_$(VER).tar.* \
-			--directory contrib/ \
-			--strip-components 1 \
-		|| $(RM) -r contrib
-	
-	@echo "# OpenCV contrib Cleaning-up..."
-	# Remove SIFT/SURF from source tarball by legal concerns
-	#cd $(GOS_TMP_DIR)/ \
-		&& $(RM) -r -v contrib/modules/xfeatures2d/
-
-	@echo "# OpenCV contrib Packing..."
-	cd $(GOS_TMP_DIR)/ \
-		&& find -L contrib -xdev -type f -print \
-		| LC_ALL=C sort \
-		| XZ_OPT="-6v" tar -caf "$(PKG)_$(VER)$(DTYPE).orig-contrib.tar.xz" \
-			-T- --owner=root --group=root --mode=a+rX \
-		&& $(RM) -r contrib
-
-	mv $(GOS_TMP_DIR)/$(PKG)_$(VER)$(DTYPE).orig* $(CURDIR)
-	rm -Rf $(GOS_TMP_DIR)
