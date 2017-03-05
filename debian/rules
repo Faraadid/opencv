@@ -107,7 +107,7 @@ configure_static:
 		-- $(CMAKE_FLAGS) \
 		-DBUILD_SHARED_LIBS=OFF -DBUILD_DOCS=OFF
 
-override_dh_auto_build: build_dyn build_static
+override_dh_auto_build: build_dyn #build_static
 	
 build_dyn:
 	dh_auto_build -B obj-$(BUILDDIR_ARCH)
@@ -117,6 +117,8 @@ build_static:
 	dh_auto_build -B obj-$(BUILDDIR_ARCH)-static
 
 override_dh_auto_test:
+
+override_dh_usrlocal:
 
 override_dh_install:
 	-rm --verbose -rf debian/tmp/usr/share/opencv/samples/octave
@@ -138,8 +140,8 @@ override_dh_install:
 
 override_dh_fixperms-indep:
 	dh_fixperms
-	#chmod 644 $(CURDIR)/debian/opencv-doc/usr/share/doc/opencv-doc/examples/python/*.py
-	#chmod 644 $(CURDIR)/debian/opencv-doc/usr/share/doc/opencv-doc/examples/python2/*.py
+	chmod 644 $(CURDIR)/debian/opencv-doc/usr/share/doc/opencv-doc/examples/python/*.py
+	chmod 644 $(CURDIR)/debian/opencv-doc/usr/share/doc/opencv-doc/examples/python2/*.py
 
 OCV_CONTRIB = opencv_contrib-3.2.0
 PKG = opencv
