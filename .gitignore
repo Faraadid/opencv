@@ -27,3 +27,8 @@ build
 debian/debhelper-build-stamp
 obj-x86_64-linux-gnu/
 obj-x86_64-linux-gnu-static/
+debian/.debhelper/
+debian/files
+debian/opencv3.substvars
+debian/opencv3/
+debian/tmp/
