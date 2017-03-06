@@ -1,4 +1,4 @@
-Source: fd-opencv3
+Source: fd-opencv3-cuda
 Priority: optional
 Section: devel
 Maintainer: nkhdiscovery <navid.khazaee@gmail.com>
@@ -7,9 +7,11 @@ Build-Depends: ant,
  build-essential,
  cmake (>= 2.8.7),
  debhelper (>= 9),
+ cuda (>= 8.0.61-1),
  default-jdk,
  dh-python,
  doxygen,
+ fd-ippicv,
  javahelper,
  libavcodec-dev,
  libavformat-dev,
@@ -66,11 +68,11 @@ Vcs-Git: https://github.com/Faraadid/opencv.git
 Vcs-Browser: https://anonscm.debian.org/git/debian-science/packages/opencv.git
 Homepage: http://opencv.org/
 
-Package: opencv3
+Package: opencv3-cuda
 Priority: extra
 Section: devel
 Maintainer: nkhdiscovery <navid.khazaee@gmail.com>
 Architecture: amd64
 Pre-Depends: ${misc:Pre-Depends}
 Depends: ${misc:Depends}, ${shlibs:Depends}
-Description: Faraadid Company simple build for OpenCV 3.2.0, with lots of modules and contrib
+Description: Faraadid Company simple build for OpenCV 3.2.0, with lots of modules and contrib, with cuda support
